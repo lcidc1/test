@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在加载中...</title>
+    <title>探索未知世界</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -29,165 +31,259 @@
         .container {
             max-width: 800px;
             width: 100%;
-            padding: 40px;
+            padding: 50px 40px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(90deg, #fff, #e0f7ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-        
-        .loader-container {
-            margin: 40px 0;
-        }
-        
-        .loader {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
             position: relative;
-        }
-        
-        .loader-circle {
-            width: 100%;
-            height: 100%;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            border-top: 5px solid #fff;
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite;
-        }
-        
-        .loader-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
-        }
-        
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.7);
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-        
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 30px 0;
             overflow: hidden;
         }
         
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4);
-            border-radius: 10px;
-            animation: progress 5s linear forwards;
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: -1;
         }
         
-        .countdown {
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #fff, #e0f7ff, #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .mystery-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+        
+        .mystery-box i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .mystery-text {
             font-size: 1.2rem;
-            margin: 20px 0;
-            font-weight: 600;
+            font-style: italic;
+            opacity: 0.8;
         }
         
-        .target-site {
+        .hint {
             background: rgba(255, 255, 255, 0.15);
             padding: 15px;
             border-radius: 12px;
-            margin: 25px 0;
+            margin: 20px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .hint:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .secret-reveal {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 15px;
+        }
+        
+        .secret-reveal.active {
+            max-height: 100px;
+        }
+        
+        .secret-text {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn-container {
+            margin: 40px 0 30px;
+            position: relative;
+        }
+        
+        .enter-btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            background-size: 300% 300%;
+            color: #333;
+            text-decoration: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: all 0.4s ease;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 4s ease infinite;
+        }
+        
+        .enter-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            animation: none;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd);
+        }
+        
+        .enter-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .enter-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%) rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+        
+        .enter-btn:hover::after {
+            transform: translateX(100%) rotate(45deg);
+        }
+        
+        .btn-text {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 1.1rem;
+            gap: 12px;
         }
         
-        .target-site i {
-            color: #4cd964;
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
         }
         
-        .manual-link {
-            margin-top: 30px;
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 20s;
         }
         
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-duration: 25s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-duration: 18s;
         }
         
         .footer {
             margin-top: 40px;
             font-size: 0.9rem;
             opacity: 0.7;
+            text-align: center;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.3); opacity: 1; }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        @keyframes progress {
-            0% { width: 0%; }
-            100% { width: 100%; }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         
-        @media (max-width: 600px) {
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 30px) rotate(90deg); }
+            50% { transform: translate(0, 60px) rotate(180deg); }
+            75% { transform: translate(-20px, 30px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 40px 25px;
             }
             
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .enter-btn {
+                padding: 16px 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
             }
             
             .subtitle {
@@ -197,78 +293,92 @@
     </style>
 </head>
 <body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
     <div class="container">
-        <h1>正在为您规划</h1>
-        <p class="subtitle">请稍等片刻，我们正在带您前往目标</p >
+        <h1>探索未知世界</h1>
+        <p class="subtitle">准备好开始一段神秘的旅程了吗？点击下方按钮，发现惊喜</p >
         
-        <div class="loader-container">
-            <div class="loader">
-                <div class="loader-circle"></div>
+        <div class="mystery-box">
+            <i class="fas fa-lock"></i>
+            <div class="mystery-text">目标目的地已被加密，点击进入按钮即可解锁</div>
+        </div>
+        
+        <div class="hint" id="hintButton">
+            <i class="fas fa-question-circle"></i>
+            <span>点击查看提示</span>
+        </div>
+        
+        <div class="secret-reveal" id="secretReveal">
+            <div class="secret-text">
+                <i class="fas fa-shield-alt"></i> 这是一个安全可靠的网站，内容精彩值得期待！
             </div>
-            <div class="loader-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
         </div>
         
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-        
-        <div class="countdown" id="countdown">5秒后自动跳转</div>
-        
-        <div class="target-site">
-            <i class="fas fa-external-link-alt"></i>
-            <span>目标网站：example.com</span>
-        </div>
-        
-        <div class="manual-link">
-            <a href=" " class="btn">
-                <i class="fas fa-paper-plane"></i> 立即跳转
+        <div class="btn-container">
+            <a href=" " class="enter-btn" id="enterButton">
+                <span class="btn-text">
+                    <i class="fas fa-door-open"></i> 点击进入神秘世界
+                </span>
             </a >
         </div>
+        
+        <p style="opacity: 0.8; margin-top: 20px;">勇敢的探索者，点击上方按钮开始冒险</p >
     </div>
     
     <div class="footer">
-        <p>© 2023 跳转服务 | 安全重定向保障</p >
+        <p>© 2023 神秘入口 | 隐藏目的地增加探索乐趣</p >
     </div>
 
     <script>
         // 设置目标网址 - 请修改为你的实际目标网址
-        const targetUrl = "lcdi08.cn/mobile";
+        const targetUrl = "https://example.com";
         
-        // 设置倒计时时间（秒）
-        let countdownTime = 5;
-        
-        // 更新倒计时显示
-        const countdownElement = document.getElementById('countdown');
-        const updateCountdown = () => {
-            countdownElement.textContent = `${countdownTime}秒后自动跳转`;
-            countdownTime--;
+        // 提示按钮交互
+        document.getElementById('hintButton').addEventListener('click', function() {
+            const secretReveal = document.getElementById('secretReveal');
+            secretReveal.classList.toggle('active');
             
-            if (countdownTime < 0) {
-                // 倒计时结束，执行跳转
-                window.location.href = targetUrl;
+            if (secretReveal.classList.contains('active')) {
+                this.innerHTML = '<i class="fas fa-eye-slash"></i> <span>隐藏提示</span>';
             } else {
-                // 继续倒计时
-                setTimeout(updateCountdown, 1000);
+                this.innerHTML = '<i class="fas fa-question-circle"></i> <span>点击查看提示</span>';
             }
-        };
+        });
         
-        // 启动倒计时
-        updateCountdown();
+        // 进入按钮点击事件
+        document.getElementById('enterButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 添加点击效果
+            this.style.transform = 'scale(0.95)';
+            this.style.animation = 'none';
+            
+            // 显示加载状态
+            const originalText = this.querySelector('.btn-text').innerHTML;
+            this.querySelector('.btn-text').innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在解锁目的地...';
+            
+            // 模拟加载过程
+            setTimeout(() => {
+                this.querySelector('.btn-text').innerHTML = '<i class="fas fa-check"></i> 目的地已解锁！';
+                
+                // 跳转到目标网站
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 800);
+            }, 1500);
+        });
         
-        // 更新目标网站显示
-        document.querySelector('.target-site span').textContent = `目标网站：${targetUrl}`;
-        
-        // 更新手动跳转链接
-        document.querySelector('.manual-link a').href = targetUrl;
-        
-        // 备用跳转方法：5秒后无论如何都跳转
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 5000);
+        // 添加键盘事件支持（按回车键也可跳转）
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('enterButton').click();
+            }
+        });
     </script>
 </body>
 </html>
