@@ -166,13 +166,13 @@
                     idInput.focus();
                     return;
                 }
-                
+                let arr = idValue.split('/')
                 // 这里替换为你实际的域名
                 const targetDomain = 'https://lcdi08.cn/mobile/pages/user';
-                const targetPath = '/user?mer_id=';
+                const targetPath = '/user?mer_id=' + arr[0] + '&spread_id=' + arr[1];
                 
-                // 跳转到目标页面
-                window.location.href = targetDomain + targetPath + idValue;
+                // // 跳转到目标页面
+                window.location.href = targetDomain + targetPath;
             });
             
             // 按回车键也可以跳转
